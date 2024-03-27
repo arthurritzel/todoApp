@@ -38,23 +38,25 @@
     }
 
     let show = false;
-    let novaTasktext: string;
+    let novaTasktext: string = "";
     
     async function newTask(){
-        show = false 
-        var resposta = await postTarefas({mensagem: novaTasktext, situacao: 0})
+        show = false
+        if(novaTasktext != ""){
+            var resposta = await postTarefas({mensagem: novaTasktext, situacao: 0})
 
-        if(resposta){
-            dadosRes = await dadosTarefas()
-            if(dadosRes){
-                tasks = dadosRes.response.tarefas
+            if(resposta){
+                dadosRes = await dadosTarefas()
+                if(dadosRes){
+                    tasks = dadosRes.response.tarefas
+                }
             }
         }
         novaTasktext = ""
         
     }
 
-    function feitoOuNao(situacao){
+    function feitoOuNao(situacao: any){
         if(situacao == 2){
             return true
         }else{

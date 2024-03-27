@@ -1,7 +1,6 @@
-<script>
+<script lang="ts">
 	import { dropzone, draggable } from '$lib/dnd';
     import {dadosTarefas} from "$lib/stores/store";
-    import { onMount } from 'svelte';
     import '../routes/global.css';
     import {deletarTrefas, postTarefas, patchTarefas} from "$lib/stores/store"
     import ButtonAddTask from './ButtonAddTask.svelte';
@@ -35,7 +34,7 @@
         cards:[]
     };
 
-    async function deletar(id){
+    async function deletar(id: any){
         var resposta = await deletarTrefas(id)
 
         if(resposta){
@@ -48,17 +47,19 @@
     }
   
     let show = false;
-    let novaTasktext ;
+    let novaTasktext: string = "" ;
     
     async function newTask(){
         show = false 
-        var resposta = await postTarefas({mensagem: novaTasktext, situacao: 0})
+        if(novaTasktext != ""){
+            var resposta = await postTarefas({mensagem: novaTasktext, situacao: 0})
 
-        if(resposta){
-            dadosRes = await dadosTarefas()
-            if(dadosRes){
-                cardsRes = dadosRes.response.tarefas
-                data = {cards: cardsRes}
+            if(resposta){
+                dadosRes = await dadosTarefas()
+                if(dadosRes){
+                    cardsRes = dadosRes.response.tarefas
+                    data = {cards: cardsRes}
+                }
             }
         }
         novaTasktext = ""
@@ -84,7 +85,7 @@
                     }
                 }}
             >
-                <h2>{column.label}</h2>
+                <h2 class="text-xl">{column.label}</h2>
                 {#if cards.length > 0}
                     <ul class="cards">
                         {#each cards as card}

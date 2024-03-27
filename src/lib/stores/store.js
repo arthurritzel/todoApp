@@ -149,3 +149,15 @@ export async function deleteUsuarios(id){
         }
     }
 }
+
+export async function getToken(){
+    if (browser) {
+        var token = window.localStorage.getItem("token");
+        
+        if(token){
+           return token
+        }else{
+            return false
+        }
+    }
+}

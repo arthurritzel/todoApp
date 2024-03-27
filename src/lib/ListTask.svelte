@@ -53,13 +53,20 @@
         novaTasktext = ""
         
     }
+
+    function feitoOuNao(situacao){
+        if(situacao == 2){
+            return true
+        }else{
+            return false}
+    }
 </script>
 
 <div class="p-4 flex space-y-3 flex-col justify-center items-center vh90 max-w-lg mx-auto ">
     <div class="w-full flex flex-col max-h-88 overflow-auto space-y-2 bg-blue-100 p-3 rounded-md shadow-md">
         {#each tasks as task}
         <div class="border border-neutral-400 shadow-sm flex rounded-md p-3 align-middle">
-            <Task id="{task.id_tarefa}" texto="{task.mensagem}" completed={task.situacao}></Task>
+            <Task id="{task.id_tarefa}" texto="{task.mensagem}" completed={feitoOuNao(task.situacao)}></Task>
             <button class="mr-5 bg-red-600 rounded-md text-white px-2" on:click={()=>{deletar(task.id_tarefa)}}>Deletar</button>
         </div>
         {/each}

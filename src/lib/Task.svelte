@@ -8,7 +8,7 @@
     function checkOr(){
         
         if (!completed){
-            patchTarefas({id_tarefa: id, mensagem: texto, situacao: 1})
+            patchTarefas({id_tarefa: id, mensagem: texto, situacao: 2})
             textDecoration = "line-through"
         }else{
             patchTarefas({id_tarefa: id, mensagem: texto, situacao: 0})

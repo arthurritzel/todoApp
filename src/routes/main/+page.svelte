@@ -1,4 +1,5 @@
 <script lang='ts'>
+    import Kanban from "$lib/Kanban.svelte";
     import ListTask from "$lib/ListTask.svelte";
     import Switch from "$lib/Switch.svelte";
     import {dadosTarefas, postTarefas, deletarTrefas, validarAdm} from "$lib/stores/store"
@@ -10,10 +11,19 @@
    })
 </script>
 
-
-<h1 class="text-center my-5 font-bold text-4xl text-blue-600">TO-DO APP</h1>
-
-{#if teste}
-    <a class="w-auto flex justify-center" href="/adm"><p class="bg-green-400 rounded-md p-3 w-fit">Area adm</p></a>
+{#if !todoMode}
+    <h1 class="text-center my-5 font-bold text-4xl text-blue-600">TO-DO APP</h1>
+{:else}
+    <h1 class="text-center my-5 font-bold text-4xl text-blue-600">KANBAN APP</h1>
 {/if}
-<ListTask></ListTask>
+<div class="flex justify-center"><Switch bind:checked={todoMode}></Switch></div>
+{#if teste}
+    <a class="w-auto mt-5 flex justify-center" href="/adm"><p class="bg-green-400 rounded-md p-3 w-fit">Area adm</p></a>
+{/if}
+
+{#if !todoMode}
+    <ListTask></ListTask>
+{:else}
+    <Kanban></Kanban>
+{/if}
+

@@ -8,6 +8,7 @@
 
         if(usuarios){
             usuariosFront = usuarios
+            console.log(usuariosFront)
         }
     }
 
@@ -43,7 +44,11 @@
     <div class="w-4/6 flex flex-col max-h-88 overflow-auto space-y-2 bg-blue-100 p-3 rounded-md shadow-md">
         {#each usuariosFront as usuario}
             <div class="flex justify-between w-auto border-b-2 border-neutral-400">
-                <p class="w-1/4">{usuario.nome}</p>
+                <p class="w-1/4 flex items-center">{usuario.nome} 
+                    {#if usuario.permissao == 1}
+                        <p class="rounded-md bg-green-600 w-13 text-white py-1 ml-3 px-2">ADM</p>
+                    {/if}
+                </p>
                 <p class="w-1/3">{usuario.email}</p>
                 <button class="w-1/5 mb-3 bg-red-600 rounded-md text-white px-2" on:click={()=>{id = usuario.id, modal_verify = true}}>DELETAR</button>
             </div>

@@ -161,3 +161,26 @@ export async function getToken(){
         }
     }
 }
+
+export async function patchSenha(usuario){
+    if (browser) {
+        var token = window.localStorage.getItem("token");
+
+        if(token){
+            
+            var url = "http://localhost:3000/usuarios"
+            var usuarios = await fetch(url, {
+                method: "PATCH",
+                headers: {Authorization: token, 'content-type': 'application/json'},
+                body: JSON.stringify({
+                    id: usuario.id,
+                    senha: usuario.senha,
+                    senhaNova: usuario.senhaNova
+                })
+            });
+            console.log(usuariosJson)
+            var usuariosJson = await usuarios.json()
+            return usuariosJson.mensagem
+        }
+    }
+}

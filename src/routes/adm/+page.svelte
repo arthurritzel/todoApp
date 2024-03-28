@@ -1,5 +1,5 @@
 <script lang="ts">
-    import {getUsuarios, deleteUsuarios} from "$lib/stores/store"
+    import {getUsuarios, deleteUsuarios, makeADM, removeADM} from "$lib/stores/store"
 
     export let usuariosFront : any = []
     var id: any
@@ -8,7 +8,7 @@
 
         if(usuarios){
             usuariosFront = usuarios
-            console.log(usuariosFront)
+          
         }
     }
 
@@ -20,25 +20,41 @@
         
         
         var resposta = await deleteUsuarios(id)
-        console.log(resposta)
+        
         if(resposta){
-            
+            respostaADM = "Usuario deletado"
             var dadosRes = await getUsuarios()
             
             if(dadosRes){
-            
+                
                 usuariosFront = dadosRes
             }
+        }else{
+            respostaADM = "Nao foi possivel apagar o usuario"
         }
         
         id = null
         modal_verify = false
+    }
+    var respostaADM: any = ""
+    async function makeADMFront(id: any){
+        respostaADM = await makeADM(id)
+        respostaADM = respostaADM.mensagem
+        getUsuariosFront()
+    }
+    async function removeADMFront(id: any){
+        respostaADM = await removeADM(id)
+        respostaADM = respostaADM.mensagem
+        getUsuariosFront()
     }
 </script>
 
 <h1 class="text-center my-5 font-bold text-4xl text-green-600">AREA ADM</h1>
 <h3 class="text-center my-5 font-bold text-2xl text-black">Usuarios</h3>
 
+{#if respostaADM}
+    <p class="text-center">{respostaADM}</p>
+{/if}
 
 <div class="w-auto h-auto flex content-center justify-center">
     <div class="w-4/6 flex flex-col max-h-88 overflow-auto space-y-2 bg-blue-100 p-3 rounded-md shadow-md">
@@ -50,6 +66,11 @@
                     {/if}
                 </p>
                 <p class="w-1/3">{usuario.email}</p>
+                {#if usuario.permissao != 1}
+                <button class="w-1/5 mb-3 bg-blue-600 rounded-md text-white px-2" on:click={()=>{makeADMFront(usuario.id_usuario)}}>MAKE ADM</button>
+                {:else}
+                <button class="w-1/5 mb-3 bg-red-600 rounded-md text-white px-2" on:click={()=>{removeADMFront(usuario.id_usuario)}}>REMOVE ADM</button>
+                {/if}
                 <button class="w-1/5 mb-3 bg-red-600 rounded-md text-white px-2" on:click={()=>{id = usuario.id, modal_verify = true}}>DELETAR</button>
             </div>
         {/each}

@@ -184,3 +184,75 @@ export async function patchSenha(usuario){
         }
     }
 }
+
+export async function patchNome(usuario){
+    if (browser) {
+        var token = window.localStorage.getItem("token");
+        
+        if(token){
+            
+            var dados = await fetch("http://localhost:3000/usuarios/nome", {
+                method: "PATCH",
+                headers: {Authorization: token, 'content-type': 'application/json'},
+                body: JSON.stringify({
+                    id_usuario: usuario.id_usuario,
+                    nome: usuario.nome
+                })
+            });
+    
+            var usuarioDados = await dados.json();
+            if(dados.status == 202){
+                return {mensagem: usuarioDados.response.mensagem, status:dados.status};
+            }else{
+                return "Falha ao alterar o nome"
+            }
+            
+        }
+    }
+}
+
+export async function makeADM(id){
+    if (browser) {
+        var token = window.localStorage.getItem("token");
+        
+        if(token){
+            
+            var dados = await fetch("http://localhost:3000/usuarios/makeadm", {
+                method: "PATCH",
+                headers: {Authorization: token, 'content-type': 'application/json'},
+                body: JSON.stringify({
+                    id_usuario: id,
+                })
+            });
+    
+            var usuarioDados = await dados.json();
+            
+            return {mensagem: usuarioDados.response.mensagem, status:dados.status};
+            
+            
+        }
+    }
+}
+
+export async function removeADM(id){
+    if (browser) {
+        var token = window.localStorage.getItem("token");
+        
+        if(token){
+            
+            var dados = await fetch("http://localhost:3000/usuarios/removeadm", {
+                method: "PATCH",
+                headers: {Authorization: token, 'content-type': 'application/json'},
+                body: JSON.stringify({
+                    id_usuario: id,
+                })
+            });
+    
+            var usuarioDados = await dados.json();
+            console.log(usuarioDados)
+            return usuarioDados
+            
+            
+        }
+    }
+}

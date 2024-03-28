@@ -22,7 +22,7 @@
                 })
         })
         var dadosJson = await dados.json()
-        
+        console.log(dadosJson)
         if(dados.status == 200){
             document.cookie = `token=${dadosJson.token}; path=/;`;
             localStorage.setItem("token", dadosJson.token)

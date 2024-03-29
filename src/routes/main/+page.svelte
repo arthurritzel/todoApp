@@ -5,7 +5,7 @@
     import {dadosTarefas, postTarefas, deletarTrefas, validarAdm} from "$lib/stores/store"
     import { onMount } from 'svelte';
     var todoMode: boolean
-    var valADM: boolean
+    var valADM: any
     onMount(async function validarAdmF() {
         valADM = await validarAdm()
    })
